@@ -42,49 +42,46 @@ Kemudian user memilih menu yang tersedia.
 Kemudian user memilih kupon yang tersedia. User hanya dapat memilih 1 kupon saja dalam 1 kesempatan.
 3. User dapat melihat subtotal dan kupon pada bagian kiri bawah tampilan `MainWindow.xaml` dengan logika yang berasal dari class model `KeranjangBelanja.cs`.
 ```C#
-private void calculateSubTotal()
+private void CalculateSubTotal()
 {
     double subtotal = 0;
     double potongan = 0;
     foreach (Item item in itemBelanja)
     {
-        subtotal += item.price;
+        subtotal += item.Price;
     }
 
     foreach (Coupon coupon in itemCoupon)
     {
-        if (coupon.discInPercent != 0)
+        if (coupon.DiscInPercent != 0)
         {
-            if(coupon.discInPercent == 30)
+            if(coupon.DiscInPercent == 30)
             {
                 if(subtotal >= 100000)
                 {
                     potongan -= 30000;
-                }
-                else
-                {
-                    potongan -= subtotal * (coupon.discInPercent / 100);
-                }
-                else
-                { 
-                    potongan -= subtotal * (coupon.discInPercent/100);
+                } else {
+                    potongan -= subtotal * (coupon.DiscInPercent / 100);
+                    }
+                } else { 
+                    potongan -= subtotal * (coupon.DiscInPercent/100);
                 }
             }
 
-            if(coupon.disc != 0)
+            if(coupon.Disc != 0)
             {
-                potongan -= coupon.disc;
+                potongan -= coupon.Disc;
             }
         }
-        payment.updateTotal(subtotal, potongan); 
+        payment.UpdateTotal(subtotal, potongan); 
     }
 }
 ```
 4. User dapat melihat total pada bagian kanan bawah tampilan `MainWindow.xaml` dengan logika yang berasal dari class model `Payment.cs`.
 ```C#
-public void updateTotal(double subtotal, double potongan)
+public void UpdateTotal(double subtotal, double potongan)
 {
     double total = subtotal + potongan;
-    this.paymentCallback.onPriceUpdated(subtotal,  total, potongan);
+    this.paymentCallback.OnPriceUpdated(subtotal, total, potongan);
 }
 ```
